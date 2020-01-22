@@ -17,15 +17,16 @@ search_bar.send_keys(google_query)
 search_bar.send_keys(Keys.RETURN)
 time.sleep(3)
 
-soup = BeautifulSoup(driver.page_source,'lxml')
-result_div = soup.find_all('div', attrs={'class': 'g'})
-
-
 links = []
 titles = []
 descriptions = []
 page = 0
-while page < 1:
+while page < 29:
+
+    soup = BeautifulSoup(driver.page_source,'lxml')
+    result_div = soup.find_all('div', attrs={'class': 'g'})
+
+
     for r in result_div:
         # Checks if each element is present, else, raise exception
         try:
