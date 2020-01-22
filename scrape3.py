@@ -3,6 +3,10 @@ from bs4 import BeautifulSoup
 import time
 from bs4.element import Tag
 from selenium.webdriver.common.keys import Keys
+import csv
+import os
+
+os.chdir("/Users/max/desktop")
 
 driver = webdriver.Chrome('/Users/max/desktop/chromedriver')
 google_query = 'site:linkedin.com/in/ AND "UC Santa Barbara" AND "Founder"'
@@ -21,7 +25,7 @@ links = []
 titles = []
 descriptions = []
 page = 0
-while page < 5:
+while page < 1:
     for r in result_div:
         # Checks if each element is present, else, raise exception
         try:
@@ -51,6 +55,11 @@ while page < 5:
     time.sleep(3)
     page = page +1
 
+with open("linkedinlinks.csv", "w") as f:
+    writer = csv.writer(f)
+    writer.writerows([[link] for link in links])
+
 #print(titles)
+print(type(links))
 print(links)
 #print(descriptions)
