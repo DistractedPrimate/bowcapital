@@ -50,3 +50,5 @@ with open("linkedinlinks.csv", "w") as f:
 
 print(type(links))
 print(links)
+
+driver.quit()
