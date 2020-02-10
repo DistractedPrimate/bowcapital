@@ -1,0 +1,61 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created on Sun Feb  9 19:10:01 2020
+
+@author: max
+"""
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+import dateparser
+import datetime
+import numpy as np
+
+def getDatetimeJob(s):
+    startDate = s.partition("-")
+    date = dateparser.parse(startDate[0])
+    return date
+
+def getDatetimeSchool(s):
+    endDate = s.partition("-")
+    date = dateparser.parse(endDate[2])
+    return date
+
+def jobdif(a,b):
+    return a - b
+
+
+    
+
+def difference(DF):
+    df = DF.copy()
+    df["school_end"] = getDatetimeSchool(df["schoolDateRange"])
+    df["company_start"] = getDatetimeJob(df["jobDateRange"])
+    df["time_difference"] = jobdif(df['school_end'], df['company_start'])
+    return df
+"""def companyStart(DF):
+    df = DF.copy()"""
+
+
+linkedin = pd.read_csv('visualizationsResultsUCSBSample.csv')
+
+linkedin_new = difference(linkedin)
+
+ax = sns.catplot(x="location",kind="count", palette="ch:.25" ,data=linkedin, )
+ax.set_xticklabels(rotation=90)
+
+d = []
+s = pd.Series(np.random.randn(5), index=['a', 'b', 'c', 'd', 'e'])
+for i in linkedin["schoolDateRange"]:
+        s += getDatetimeSchool(linkedin["schoolDateRange"][i])
+
+print (s)
+input_string = "May 2019 - April 2020"
+#print(getDatetime(input_string))
+print(getDatetimeSchool(input_string))
+# a generator will be returned by the datefinder module. I'm typecasting it to a list. Please read the note of caution provided at the bottom.
+new = dateparser.parse(input_string)
+
+
+
